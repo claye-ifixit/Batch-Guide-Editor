@@ -1,0 +1,480 @@
+/* CSS */
+
+@font-face {
+	font-family: 'Proxima Nova';
+	src: url('Proxima Nova/Mark Simonson - Proxima Nova Regular.otf');
+}
+@font-face {
+	font-family: 'Open Sans';
+	src: url('Open_Sans/OpenSans-Regular.ttf');
+}
+
+:root {
+	--console-height: 120px;
+
+	--ifixit-blue: #0071CE;
+	--ifixit-black: #222223;
+	--ifixit-gray: #DAD9D7;
+	--ifixit-green: #68BC45;
+	--ifixit-red: #E83D16;
+	--custom-black: #212426;
+
+	--huge: 96pt;
+	--tall: 48pt;
+	--normal: 36pt;
+	--short: 24pt;
+	--tiny: 20pt;
+	
+	--border-red: solid 1px var(--ifixit-red);
+
+	--label-font-color: #4B5563;
+
+	--list-item-bg: #F9FAFB;
+	--list-item-bg-hover: #FFF;
+
+	--border-radius-large: 4px;
+	--border-radius-small: 2px;
+
+	--border-btn-white: 1px solid var(--ifixit-gray);
+	--border-btn-red: 1px solid var(--ifixit-red);
+	--border-btn-green: 1px solid var(--ifixit-green);
+	--btn-white: var(--background-white);
+	--btn-white-hover: #f3f4f6;
+
+	--border-input: 1px solid var(--ifixit-gray);
+	
+	--checkbox-size: 0.9rem;
+	--border-checkbox: 1px solid #6B7280;
+
+	--padding-input: 4px 8px;
+	--padding-btn: 4px 12px;
+
+	--button-blue: #1975F1;
+	--button-blue-hover: #085FD9;
+
+	--background-white: #FFF;
+	--background-darkwhite: #F9FAFB;
+	--background-darkblue: #1f2937;
+
+	--transition-duration: 0.2s;
+}
+
+html, body {
+	background-color: var(--background-white);
+}
+
+html {
+	margin: 0 0 24px 0;
+	padding: 0 4vw 0 4vw;
+}
+
+body {
+	margin: 0;
+	padding: 0;
+	max-width: 1920px;
+	margin: auto;
+}
+
+html * {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+	font-weight: 400;
+	font-style: normal;
+	font-size: 14px;
+	color: var(--custom-black);
+}
+
+
+/* CONSOLE */
+#console {
+	display: none;
+	position: fixed;
+	top: 0;
+	right: 1px;
+	bottom: auto;
+	left: 0;
+	height: var(--console-height);
+	padding: 8pt;
+	overflow-x: hidden;
+	overflow-y: auto;
+	background-color: var(--background-darkblue);
+	color: #AEABA7;
+	font-size: 10pt;
+	font-family: 'Courier New', Courier, monospace;
+	z-index: 1;
+}
+#console-spacer {
+	display: none;
+	height: calc(var(--console-height) + 30px);
+}
+/* END CONSOLE */
+
+
+.windowLoading {
+	cursor: wait !important;
+}
+
+#edited_guides_container {
+	display: none;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translateX(-50%) translateY(-50%);
+	padding: var(--normal) var(--tall);
+	background-color: var(--background-white);
+	border: var(--border-input);
+	border-radius: var(--border-radius-large);
+	box-shadow: 0 0 36px rgba(0, 0, 0, 0.3);
+}
+
+#edited_guides_container * {
+	font-size: 22px;
+}
+
+
+hr {
+	margin: 0 0 24px 0;
+	border: 4px solid var(--background-darkwhite);
+}
+
+
+h1 {
+	font-size: 28px;
+	font-weight: 600;
+}
+
+
+h2 {
+	font-size: 22px;
+	font-weight: 600;
+}
+
+h2, h2, label, button, input[type=text], textarea, select, #edited_guides_container {
+	font-family: -apple-system,BlinkMacSystemFont,'Segoe UI','Noto Sans',Helvetica,Arial,sans-serif,'Apple Color Emoji','Segoe UI Emoji';
+}
+
+
+/* PAGE STRUCTURING */
+
+#pageDesc {
+	width: 50%;
+	min-width: 300px;
+}
+
+/* Parent container */
+.container {
+	display: grid;
+	grid-template-columns: auto 1fr;
+	gap: 48pt;
+}
+/* child container */
+.container-small {
+	display: flex;
+	flex-flow: column nowrap;
+	min-width: 300px;
+	max-width: 600px;
+}
+/* child container */
+.container-large {
+	display: flex;
+	flex-flow: column nowrap;
+}
+
+#edit_and_list > .container-large {
+	min-width: 600px;
+}
+
+/* stretches the select-guides ul to match the search-guides height (if search-guides is larger) */
+.container-large > ul, .container-small > ul {
+	flex: 1 1 auto;
+}
+
+.divider {
+	text-align: left;
+	margin-bottom: 24px;
+}
+/* END PAGE STRUCTURING */
+
+
+
+.tiny {
+	height: var(--tiny);
+	text-align: left;
+	margin-bottom: 6px;
+}
+.short {
+	height: var(--short);
+	margin-top: 2pt;
+	margin-bottom: 2pt;
+}
+.normal {
+	height: var(--normal);
+}
+.tall {
+	height: var(--tall);
+}
+.huge {
+	height: var(--huge);
+}
+
+
+/* INPUTS AND LISTS */
+
+/* titles above inputs */
+label.tiny {
+	display: block;
+	margin-bottom: 0;
+	font-weight: 600;
+	color: var(--label-font-color);
+}
+
+/* text box styling */
+input[type=text], textarea, select {
+	padding: var(--padding-input);
+	resize: none;
+	border: var(--border-input);
+	border-radius: var(--border-radius-large);
+	transition-property: background-color, border;
+	transition-duration: var(--transition-duration);
+}
+
+#authors {
+	resize: vertical;
+}
+
+/* Gets rid of the annoying shitespace under the textarea */
+#urls {
+	vertical-align: top;
+	resize: vertical;
+}
+
+.invalid, .failed {
+	background-color: rgba(232, 61, 22, 0.2) !important;
+}
+
+.completed {
+	background-color: rgba(104, 188, 69, 0.2) !important;
+}
+
+#qty_searched, #qty_loaded {
+	margin: 0 6px;
+}
+
+/* select section ul and edit section ul*/
+#guides_list, #loaded_list {
+	margin-top: 0;
+	margin-left: 0;
+	margin-right: 0;
+	list-style-type: none;
+	text-align: left;
+	padding: var(--padding-input);
+	background-color: var(--background-white);
+	border: var(--border-input);
+	border-radius: var(--border-radius-large);
+}
+
+/* only the ul on right side of edit section, keeps its baseline lined up with bottom of page */
+#loaded_list {
+	margin-bottom: 0;
+}
+
+/* all list items except the flags suggestions */
+li:not(.flagSuggli) {
+	margin: 2px;
+	padding: var(--padding-input);
+	background-color: var(--list-item-bg);
+	border: 1px solid transparent;
+	border-radius: var(--border-radius-small);
+	user-select: none;
+	transition-property: background-color;
+	transition-duration: var(--transition-duration);
+}
+li:not(.flagSuggli):hover {
+	background-color: var(--list-item-bg-hover);
+	border: var(--border-btn-white);
+}
+
+/* remove button appearing in the li of ul#loadedList */
+.loadedBtn-remove {
+	display: none;
+	margin: 0 0 0 12px;
+	padding: 0;
+	color: var(--ifixit-red);
+	font-size: 0.8rem;
+	cursor: pointer;
+}
+
+.flagSugg-title {
+	vertical-align: middle;
+	margin: 0 0 0 12px;
+	padding: 0;
+	font-size: 0.8rem;
+}
+
+/* hovering over loaded list items */
+#loaded_list > li:hover .loadedBtn-remove {
+	display: inline;
+}
+
+/* just cursor stuff for the edit section li items */
+.semantic {
+	cursor: default;
+	border-radius: var(--border-radius-small);
+}
+.semantic > * {
+	cursor: pointer;
+}
+.semantic > label {
+	margin: 0 3px;
+}
+.check {
+	width: var(--checkbox-size);
+	height: var(--checkbox-size);
+	margin: 3px;
+	vertical-align: middle;
+	border: var(--border-checkbox);
+}
+
+#flagsSugg {
+	display: none;
+	position: absolute;
+	width: 50%;
+	max-width: 600px;
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	border: var(--border-input);
+	border-radius: var(--border-radius-large);
+	background-color: var(--background-white);
+	box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+}
+.flagSuggli {
+	margin: 0;
+	padding: 10px 8px;
+	background-color: transparent;
+	cursor: pointer;
+}
+.flagSuggli:hover {
+	background-color: var(--btn-white-hover);
+}
+.visible {
+	display: block !important;
+}
+
+/* END INPUTS AND LISTS */
+
+
+/* EDIT SECTION ISH */
+
+/* used on any children of a container-small or container-large or divider */
+.fullwidth {
+	width: 100%;
+}
+
+/* Controls width of text inputs in edit section */
+input.normal:not(.fullwidth), input.short:not(.fullwidth), .halfwidth {
+	width: 50%;
+}
+
+/* Space between stacked text boxes */
+input.short {
+	margin-top: 4px;
+	margin-bottom: 4px;
+}
+
+/* END EDIT SECTION ISH */
+
+
+
+/* BUTTONS */
+
+button:not(.blueBtn) {
+	font-weight: 500;
+}
+
+button, select {
+	cursor: pointer;
+}
+
+/* All buttons except "check all" and "clear list" */
+.divider > button {
+	height: var(--short);
+}
+
+#clearAll:hover {
+	border: var(--border-btn-red);
+}
+
+.successful {
+	border: var(--border-btn-green) !important;
+}
+
+/* Big buttons */
+.blueBtn {
+	height: var(--normal);
+	color: var(--background-white);
+	background-color: var(--button-blue);
+	border: 1px solid transparent;
+	border-radius: var(--border-radius-large);
+	transition-property: background-color;
+	transition-duration: var(--transition-duration);
+}
+.blueBtn:hover {
+	background-color: var(--button-blue-hover);
+}
+
+.whiteBtn {
+	padding: var(--padding-btn);
+	background-color: var(--btn-white);
+	border: var(--border-btn-white);
+	border-radius: var(--border-radius-large);
+	transition-property: background-color;
+	transition: var(--transition-duration);
+}
+.whiteBtn:hover {
+	background-color: var(--btn-white-hover);
+}
+
+/* container for standalone big buttons */
+.button-container {
+	text-align: center;
+}
+
+/* big buttons */
+button.wide {
+	padding-left: 22pt;
+	padding-right: 22pt;
+}
+
+button.tiny {
+	width: 100px;
+	text-align: center;
+	font-size: 12px;
+}
+
+/* END BUTTONS */
+
+
+/* MOBILE */
+@media only screen and (max-width: 1024px) {
+	
+	#pageDesc {
+		width: 100%;
+	}
+	.container, .container-small, .container-large {
+		display: block;
+		text-align: center;
+		min-width: none;
+		max-width: none;
+		width: 100%;
+	}
+	input[type=text] {
+		width: 100% !important;
+	}
+	.button-container {
+		text-align: left;
+	}
+	#flagsSugg {
+		width: 75%;
+		min-width: 415px;
+	}
+}

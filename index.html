@@ -1,0 +1,157 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<title>Batch Guide Editor</title>
+	<link type="text/css" rel="stylesheet" href="style.css">
+</head>
+<body>
+	<div id="console">Status updates will print here...</div>
+	<div id="console-spacer"></div>
+
+	<h1>Batch Guide Editor</h1>
+	<div id="pageDesc">
+		<p>Make edits to multiple guides at once. Use the search tools to build a list of guides you want to edit. Select and add guides to your list incrementally or all-together. Once you have a list of guides loaded, you can make edits to them. Start by entering your unique authorization token into the first field. Generate a token for yourself by using <a href="https://colab.research.google.com/drive/1QCD8UVIWRtbk6XjOLE6sebP7JEbZQ7iP?usp=sharing#scrollTo=-090ZwDjm9io" target="_blank">this tool.</a></p>
+		<hr>
+		<div class="divider">
+			<label for="authToken" class="tiny">Enter your Authentication Token</label>
+			<input type="text" id="authToken" class="short fullwidth" placeholder="Ex: r8y042a85f6408913x4e097v2090s34e6" value="">
+		</div>
+	</div>
+	<hr>
+	<div id="search_and_select" class="container">
+		<div class="container-small">
+			<h2>Search Guides</h2>
+			<div class="divider">
+				<label for="authors" class="tiny">Filter by Author</label>
+				<textarea id="authors" class="tall fullwidth" title="Enter one email on each line." placeholder="authorone@ifixit.com&#10;authortwo@ifixit.com"></textarea>
+			</div>
+			<div class="divider">
+				<label for="publicity" class="tiny">Filter by Publicity</label>
+				<select id="publicity" class="short">
+					<option value="-1" selected>No Preference</option>
+					<option value="0">Private</option>
+					<option value="1">Public</option>
+				</select>
+			</div>
+			<div class="divider">
+				<label for="urls" class="tiny">Enter Device URL(s) or Guide ID(s)</label>
+				<textarea id="urls" class="huge fullwidth" title="Enter entire device URLs or individual guide IDs. One per line." placeholder="https://www.ifixit.com/Device/{deviceName}&#10;123456&#10;31415&#10;101805"></textarea>
+			</div>
+			<div class="button-container">
+				<button id="search" class="wide blueBtn">Search</button>
+			</div>
+		</div>
+		<div class="container-large">
+			<h2>Select Guides</h2>
+			<div class="tiny">
+				<button id="toggleAll" class="tiny whiteBtn">Select All</button>
+				<button id="clearAll" class="tiny whiteBtn">Clear List</button>
+				<span id="qty_searched"><span id="qtyS">0</span> guide(s)</span>
+			</div>
+			<ul id="guides_list" class="divider" title="These won't go away until you click Clear List.">Searched guides will appear here...</ul>
+			<div class="button-container">
+				<button id="load" class="wide blueBtn">Load Guides into List</button>
+			</div>
+		</div>
+	</div>
+
+	<div id="edited_guides_container">
+		<span id="edited_guides">0</span><span> guide(s) changed</span>
+	</div>
+
+	<br>
+	<hr>
+	<div id="edit_and_list" class="container">
+		<div class="container-large">
+			<h2>Edit Guides</h2>
+			<div class="divider">
+				<label for="flags" class="tiny">Add or Remove Flags</label>
+				<input type="text" id="flags" class="short" title="Enter flag IDs separated by commas." placeholder="GUIDE_OEM, DARE_TO_REPAIR, ...">
+				<ul id="flagsSugg"></ul>
+				<button id="flags-add" class="whiteBtn">Add</button>
+				<button id="flags-remove" class="whiteBtn">Remove</button>
+			</div>
+			<hr>
+			<div class="divider">
+				<label for="tags" class="tiny">Add or Remove Tags</label>
+				<input type="text" id="tags" class="short" title="Enter tag names separated by commas." placeholder="hardware, apple, phone, ...">
+				<button id="tags-add" class="whiteBtn">Add</button>
+				<button id="tags-remove" class="whiteBtn">Remove</button>
+			</div>
+			<hr>
+			<div class="divider">
+				<label for="groups" class="tiny">Add or Remove a Team</label>
+				<input type="text" id="groups" class="short" title="Enter one ID of the team to add to the guides." placeholder="12345...">
+				<button id="groups-add" class="whiteBtn">Add</button>
+				<button id="groups-remove" class="whiteBtn">Remove</button>
+			</div>
+			<hr>
+			<div class="divider">
+				<label for="tools" class="tiny">Add or Remove a Tool</label>
+				<input type="text" id="tools" class="short" title="Enter the name of one tool. The closest search result will be used." placeholder="Spudger...">
+				<button id="tools-add" class="whiteBtn">Add</button>
+				<button id="tools-remove" class="whiteBtn">Remove</button>
+				<div>
+					<input type="checkbox" id="toolsOptional" class="check">
+					<label for="toolsOptional">Optional</label>
+				</div>
+			</div>
+			<hr>
+			<div class="divider">
+				<label for="parts" class="tiny">Add or Remove a Part</label>
+				<input type="text" id="parts" class="short" title="Enter the name of one part. The closest search result will be used." placeholder="Thermal Paste...">
+				<button id="parts-add" class="whiteBtn">Add</button>
+				<button id="parts-remove" class="whiteBtn">Remove</button>
+				<div>
+					<input type="checkbox" id="partsOptional" class="check">
+					<label for="partsOptional">Optional</label>
+				</div>
+			</div>
+			<hr>
+			<div class="divider">
+				<label for="prereq-preceding" class="tiny">Add or Remove a Prerequisite</label>
+				<input type="text" id="prereq-preceding" class="short" title="(If adding a prereq) This tells the new prerequisite what to insert after. Leave this blank to add a prereq to the beginning." placeholder="Preceding Prerequisite Guide ID...">
+				<input type="text" id="prereq" class="short" title="This prereq will be added after the above value, at the beginning of the prereqs, or be removed." placeholder="Guide ID to add or remove as Prerequisite...">
+				<button id="prereq-add" class="whiteBtn">Add</button>
+				<button id="prereq-remove" class="whiteBtn">Remove</button>
+			</div>
+			<hr>
+			<div class="divider">
+				<label for="category" class="tiny">Change the Category of Guides</label>
+				<input type="text" id="category" class="short" placeholder="Electronics Skills">
+				<button id="category-replace" class="whiteBtn">Change</button>
+			</div>
+			<hr>
+			<div class="divider">
+				<label for="intro-find" class="tiny">Find-and-Replace in the Introduction</label>
+				<input type="text" id="intro-find" class="short" title="This is the phrase that will be replaced." placeholder="Find">
+				<input type="text" id="intro-replace" class="short" title="This is the phrase that will replace the above one." placeholder="Replacement">
+				<button id="intro-change" class="whiteBtn">Change</button>
+			</div>
+			<hr>
+			<div class="divider">
+				<div>
+					<button id="publish" class="wide blueBtn">Publish All Guides</button>
+				</div>
+			</div>
+			<div class="divider">
+				<div>
+					<button id="unpublish" class="wide blueBtn">Unpublish All Guides</button>
+				</div>
+			</div>
+		</div>
+		<div class="container-small">
+			<h2>Guides List</h2>
+			<div class="tiny">
+				<button id="export" class="tiny whiteBtn">Export List</button>
+				<span id="qty_loaded"><span id="qtyL">0</span> guide(s)</span>
+			</div>
+			<ul id="loaded_list" class="divider"></ul>
+		</div>
+	</div>
+	<script src="script.js"></script>
+	<script src="script_edits.js"></script>
+</body>
+</html>
